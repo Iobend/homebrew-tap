@@ -1,8 +1,8 @@
 class Iobend < Formula
   desc "Developer environment manager for diagnostics, setup, and DevOps automation"
   homepage "https://github.com/Iobend/iobend"
-  license "MIT"
   version "1.0.5"
+  license "MIT"
 
   on_macos do
     on_arm do
