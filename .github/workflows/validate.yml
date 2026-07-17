@@ -24,13 +24,13 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@master
 
       - name: Audit Formula
-        run: brew audit --strict --online ./Formula/iobend.rb
+        run: brew audit --strict --online iobend
 
       - name: Style Formula
-        run: brew style ./Formula/iobend.rb
+        run: brew style iobend
 
       - name: Install Formula from source
-        run: brew install --build-from-source ./Formula/iobend.rb
+        run: brew install --build-from-source iobend
 
       - name: Test Formula
         run: brew test iobend
