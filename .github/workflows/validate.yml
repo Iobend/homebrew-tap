@@ -1,0 +1,36 @@
+name: Validate Formula
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'Formula/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'Formula/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Audit Formula
+        run: brew audit --strict --online ./Formula/iobend.rb
+
+      - name: Style Formula
+        run: brew style ./Formula/iobend.rb
+
+      - name: Install Formula from source
+        run: brew install --build-from-source ./Formula/iobend.rb
+
+      - name: Test Formula
+        run: brew test iobend

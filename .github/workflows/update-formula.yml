@@ -1,0 +1,94 @@
+name: Update Formula
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g., 1.0.5)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  update-formula:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download SHA256SUMS and Update Formula
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          echo "Updating IOBend Formula to version: $VERSION"
+          
+          # Download the SHA256SUMS file from the latest release
+          BASE_URL="https://github.com/Iobend/iobend/releases/download/v$VERSION"
+          curl -sL "$BASE_URL/SHA256SUMS" -o SHA256SUMS
+          
+          if [ ! -f "SHA256SUMS" ]; then
+            echo "Failed to download SHA256SUMS from $BASE_URL"
+            exit 1
+          fi
+          
+          # Extract SHAs
+          MAC_ARM64_SHA=$(grep "darwin-arm64" SHA256SUMS | awk '{print $1}')
+          MAC_X64_SHA=$(grep "darwin-x64" SHA256SUMS | awk '{print $1}')
+          LINUX_ARM64_SHA=$(grep "linux-arm64" SHA256SUMS | awk '{print $1}')
+          LINUX_X64_SHA=$(grep "linux-x64" SHA256SUMS | awk '{print $1}')
+          
+          # Generate new Formula content (using ruby). 
+          # For robustness, we will use a ruby script to dynamically rebuild the formula.
+          ruby -e "
+            content = File.read('Formula/iobend.rb')
+            
+            # Update version
+            content.sub!(/version \".*\"/, %Q{version \"$VERSION\"})
+            
+            # Update Linux ARM64
+            content.sub!(/OS\\.linux\\?.*?Hardware::CPU\\.arm\\?.*?url \".*?\".*?sha256 \".*?\"/m) do |m|
+              m.sub(/url \".*?\"/, %Q{url \"#{ENV['BASE_URL']}/IOBend-v$VERSION-linux-arm64.tar.gz\"})
+               .sub(/sha256 \".*?\"/, %Q{sha256 \"$LINUX_ARM64_SHA\"})
+            end
+            
+            # Update Linux x64 (intel)
+            content.sub!(/OS\\.linux\\?.*?Hardware::CPU\\.intel\\?.*?url \".*?\".*?sha256 \".*?\"/m) do |m|
+              m.sub(/url \".*?\"/, %Q{url \"#{ENV['BASE_URL']}/IOBend-v$VERSION-linux-x64.tar.gz\"})
+               .sub(/sha256 \".*?\"/, %Q{sha256 \"$LINUX_X64_SHA\"})
+            end
+            
+            # Update macOS ARM64
+            content.sub!(/OS\\.mac\\?.*?Hardware::CPU\\.arm\\?.*?url \".*?\".*?sha256 \".*?\"/m) do |m|
+              m.sub(/url \".*?\"/, %Q{url \"#{ENV['BASE_URL']}/IOBend-v$VERSION-macos-arm64.tar.gz\"})
+               .sub(/sha256 \".*?\"/, %Q{sha256 \"$MAC_ARM64_SHA\"})
+            end
+            
+            # Update macOS x64 (intel)
+            content.sub!(/OS\\.mac\\?.*?Hardware::CPU\\.intel\\?.*?url \".*?\".*?sha256 \".*?\"/m) do |m|
+              m.sub(/url \".*?\"/, %Q{url \"#{ENV['BASE_URL']}/IOBend-v$VERSION-macos-x64.tar.gz\"})
+               .sub(/sha256 \".*?\"/, %Q{sha256 \"$MAC_X64_SHA\"})
+            end
+
+            File.write('Formula/iobend.rb', content)
+          "
+          
+          # Clean up
+          rm SHA256SUMS
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git add Formula/iobend.rb
+          
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore(formula): update iobend to version ${{ inputs.version }}"
+            git push origin main
+          fi
