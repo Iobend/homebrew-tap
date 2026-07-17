@@ -1,7 +1,6 @@
 # IOBend Homebrew Tap
 
-<!-- TODO: Insert IOBend logo here -->
-![IOBend Logo](TODO_LOGO_URL)
+![IOBend Logo](assets/IOBend.jpg)
 
 ## Description
 
