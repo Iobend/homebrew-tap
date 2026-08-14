@@ -45,7 +45,7 @@ iobend --version
 
 - [GitHub Repository](https://github.com/Iobend/iobend)
 - [npm Package](https://www.npmjs.com/package/iobend)
-- [WinGet Packages](https://github.com/Iobend/winget-pkgs)
+- [Issues](https://github.com/Iobend/iobend/issues)
 
 ## Supported Platforms
 
@@ -56,9 +56,15 @@ The Homebrew Formula supports the following platforms:
 - Linux x64
 - Linux arm64
 
+## Issues
+
+If you encounter any bugs, issues, or have feature requests, please report them on GitHub:
+
+- [IOBend Issue Tracker](https://github.com/Iobend/iobend/issues)
+
 ## Contributing
 
-Contributions are welcome! If you find any issues or would like to add improvements, please submit an issue or a pull request.
+Contributions are welcome! If you find any issues or would like to add improvements, please submit an [issue](https://github.com/Iobend/iobend/issues) or a pull request.
 
 ## License
 
