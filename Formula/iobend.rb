@@ -1,24 +1,20 @@
 class Iobend < Formula
   desc "Developer environment manager for diagnostics, setup, and DevOps automation"
   homepage "https://github.com/Iobend/iobend"
-  version "2.1.0"
+  version "2.5.0"
   license "MIT"
 
   on_macos do
     on_arm do
-      url "https://github.com/Iobend/iobend/releases/download/v2.1.0/IOBend-v2.1.0-macos-arm64.tar.gz"
-      sha256 "489604efb712d8af5e38d0a66b9ce98314b6cae39fc7f2020728537fb694ced8"
+      url "https://github.com/Iobend/iobend-core/releases/download/v2.5.0/IOBend-v2.5.0-macos-arm64.tar.gz"
+      sha256 "540252406d685d8416b475da0e065e93a418aab407494b57f5b8a6eb847a2d0b"
     end
   end
 
   on_linux do
-    on_arm do
-      url "https://github.com/Iobend/iobend/releases/download/v2.1.0/IOBend-v2.1.0-linux-arm64.tar.gz"
-      sha256 "0901d20d73965ee85ae3d77576f14307102a8ef6263abaa2c2578adabd3b7aa4"
-    end
     on_intel do
-      url "https://github.com/Iobend/iobend/releases/download/v2.1.0/IOBend-v2.1.0-linux-x64.tar.gz"
-      sha256 "f5f2c045713aa2f9a5f5927b037366ae8bc6cef0f84762fa5f4e535b675e5804"
+      url "https://github.com/Iobend/iobend-core/releases/download/v2.5.0/IOBend-v2.5.0-linux-x64.tar.gz"
+      sha256 "a44e7bda0ae285d0df5306a53538188b660f34ec33acadde990242817ad56336"
     end
   end
 
