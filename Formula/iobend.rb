@@ -6,14 +6,14 @@ class Iobend < Formula
   on_macos do
     on_arm do
       url "https://github.com/Iobend/iobend/releases/download/v2.5.0/IOBend-v2.5.0-macos-arm64.tar.gz"
-      sha256 "540252406d685d8416b475da0e065e93a418aab407494b57f5b8a6eb847a2d0b"
+      sha256 "e44f724dbecaeacd2eb179bbc91a1b5b79ad8f24c793cde08752151f606886f4"
     end
   end
 
   on_linux do
     on_intel do
       url "https://github.com/Iobend/iobend/releases/download/v2.5.0/IOBend-v2.5.0-linux-x64.tar.gz"
-      sha256 "a44e7bda0ae285d0df5306a53538188b660f34ec33acadde990242817ad56336"
+      sha256 "4686edd26c8cea3d9f24236f8f516144cf87058c2d7efc13eba86a705e1695e2"
     end
   end
 
