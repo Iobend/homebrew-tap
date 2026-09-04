@@ -1,19 +1,19 @@
 class Iobend < Formula
   desc "Developer environment manager for diagnostics, setup, and DevOps automation"
-  homepage "https://github.com/Iobend/iobend"
+  homepage "https://iobend.com"
   license "MIT"
 
   on_macos do
     on_arm do
-      url "https://github.com/Iobend/iobend/releases/download/v2.5.0/IOBend-v2.5.0-macos-arm64.tar.gz"
-      sha256 "e44f724dbecaeacd2eb179bbc91a1b5b79ad8f24c793cde08752151f606886f4"
+      url "https://github.com/Iobend/iobend/releases/download/v2.6.1/IOBend-v2.6.1-macos-arm64.tar.gz"
+      sha256 "69ca574658644a19729b65466e7c86a75301d92ad99d2c2b9d76b7fd722f7b88"
     end
   end
 
   on_linux do
     on_intel do
-      url "https://github.com/Iobend/iobend/releases/download/v2.5.0/IOBend-v2.5.0-linux-x64.tar.gz"
-      sha256 "4686edd26c8cea3d9f24236f8f516144cf87058c2d7efc13eba86a705e1695e2"
+      url "https://github.com/Iobend/iobend/releases/download/v2.6.1/IOBend-v2.6.1-linux-x64.tar.gz"
+      sha256 "6b9d7fd0305a526f3031b3f55644835c67b98066eb75c471fc345ebf73e10465"
     end
   end
 
@@ -25,3 +25,4 @@ class Iobend < Formula
     assert_match version.to_s, shell_output("#{bin}/iobend --version")
   end
 end
+
